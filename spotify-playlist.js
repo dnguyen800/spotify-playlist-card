@@ -33,45 +33,30 @@ class SpotifyPlaylist extends HTMLElement {
             ha-card {
               /* sample css */
             }
-            table {
-              width: 100%;
-              padding: 0 32px 0 32px;
+
+            #row {
+              display: flex;
+              justify-content: center;
             }
-            thead th {
-              text-align: left;
-            }
-            tbody tr:nth-child(odd) {
-              background-color: var(--paper-card-background-color);
-            }
-            tbody tr:nth-child(even) {
-              background-color: var(--secondary-background-color);
-            }
+
             button {
-              overflow: auto;
+              float: center;
+              border: 0;
               padding: 0;
-              margin: 0;
+              margin: 2px 2px;
+              border-radius: 4px;
+              -webkit-transition-duration: 0.4s; /* Safari */
+              transition-duration: 0.4s;             
             }
-            paper-button {
-              float: right;
-            }
-            tbody td.name a {
-              color: var(--primary-text-color);
-              text-decoration-line: none;
-              font-weight: normal;
-            }
-            td a {
-              color: red;
-              font-weight: bold;
-            }
-            tbody td.separator {
-              font-weight: bold;
-              padding-top: 10px;
-              text-transform: capitalize;
+
+            button:hover {
+              box-shadow: 0 5px 50px 0 rgba(0,0,0,0.2), 0 5px 20px 0 rgba(0,0,0,0.19);
             }
             img {
                 display: block;
-                height: 150px;
-                width: 150px;
+                height: 200px;
+                width: 200px;
+                border-radius: 4px;   
             }
           `;
       content.innerHTML = `
@@ -92,19 +77,30 @@ class SpotifyPlaylist extends HTMLElement {
       const root = this.shadowRoot;
       const card = root.lastChild;
       this.myhass = hass;
-      this.handlers = this.handlers || [];
       let card_content = ''
+      card_content += `
+        <div id="row">
+      `;
        
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
+        let column_count = 0
+        
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}"></button>`;
+            column_count += 1
+            if (column_count == 2) {
+              card_content += `</div><div id="row">`;
+            }
+            if (column_count == 4) {
+              card_content += `</div><div id="row">`;
+            }
             debugger;
           }
         } 
       };
-      
+      card_content += `</div>`;
       root.lastChild.hass = hass;
       root.getElementById('content').innerHTML = card_content;
 
