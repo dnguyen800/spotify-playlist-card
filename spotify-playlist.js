@@ -17,7 +17,6 @@ class SpotifyPlaylist extends HTMLElement {
       if (!config.entity) {
         throw new Error('Please define an entity');
       }
-  
       const root = this.shadowRoot;
       if (root.lastChild) root.removeChild(root.lastChild);
   
@@ -79,6 +78,7 @@ class SpotifyPlaylist extends HTMLElement {
       <div id='content'>
       </div>
       `;
+      
       card.header = cardConfig.title
       card.appendChild(content);
       card.appendChild(style);
@@ -110,13 +110,15 @@ class SpotifyPlaylist extends HTMLElement {
 
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
+        const media_player = config.media_player;
+
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             debugger;
             card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
               console.log('callService started')
               debugger;
-              const myPlaylist = {"entity_id": "media_player.spotify", "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
+              const myPlaylist = {"entity_id": media_player, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
               this.myhass.callService('media_player', 'play_media', myPlaylist);
               console.log('callService ended')
               debugger;
