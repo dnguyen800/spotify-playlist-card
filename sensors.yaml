@@ -1,0 +1,4 @@
+- platform: spotifyplaylist
+  name: "Playlists"
+  client_id: 'client_id_here'
+  client_secret: 'client_secret_here'

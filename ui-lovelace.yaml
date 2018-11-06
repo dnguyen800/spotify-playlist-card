@@ -1,0 +1,9 @@
+
+
+resources:
+  - url: /local/tracker-card-min.js
+    type: js 
+
+  - type: "custom:tracker-card-min"
+    trackers:
+      - sensor.playlists

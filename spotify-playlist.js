@@ -6,7 +6,7 @@
 // ${playlist['Unorganized']['uri']}<br>
 
 
-class TrackerCardMin extends HTMLElement {
+class SpotifyPlaylist extends HTMLElement {
 
     constructor() {
       super();
@@ -14,8 +14,8 @@ class TrackerCardMin extends HTMLElement {
     }
   
     setConfig(config) {
-      if (!config.trackers || !Array.isArray(config.trackers)) {
-        throw new Error('Please at least one tracker');
+      if (!config.entity) {
+        throw new Error('Please define an entity');
       }
   
       const root = this.shadowRoot;
@@ -78,7 +78,6 @@ class TrackerCardMin extends HTMLElement {
       content.innerHTML = `
       <div id='content'>
       </div>
-      Bottom part
       `;
       card.header = cardConfig.title
       card.appendChild(content);
@@ -95,49 +94,40 @@ class TrackerCardMin extends HTMLElement {
       this.myhass = hass;
       this.handlers = this.handlers || [];
       let card_content = ''
-
-      config.trackers.forEach(tracker => {
-        if (hass.states[tracker]) {
-          const playlist = hass.states[tracker].attributes;
-
-
-          for (let entry in playlist) {
-            if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
-              card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}"></button>`;
-              debugger;
-
-            }
-          } 
-        }
-      });
-
-
+       
+      if (hass.states[config.entity]) {
+        const playlist = hass.states[config.entity].attributes;
+        for (let entry in playlist) {
+          if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
+            card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}"></button>`;
+            debugger;
+          }
+        } 
+      };
+      
       root.lastChild.hass = hass;
       root.getElementById('content').innerHTML = card_content;
 
-      config.trackers.forEach(tracker => {
-        if (hass.states[tracker]) {
-          const playlist = hass.states[tracker].attributes;
-
-
-          for (let entry in playlist) {
-            if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
+      if (hass.states[config.entity]) {
+        const playlist = hass.states[config.entity].attributes;
+        for (let entry in playlist) {
+          if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
+            debugger;
+            card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
+              console.log('callService started')
               debugger;
-              card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
-                console.log('callService started')
-                debugger;
-                const myPlaylist = {"entity_id": "media_player.spotify", "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
-                this.myhass.callService('media_player', 'play_media', myPlaylist);
-                console.log('callService ended')
-                debugger;
-              });            
-            }  
-          }
-        }})
+              const myPlaylist = {"entity_id": "media_player.spotify", "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
+              this.myhass.callService('media_player', 'play_media', myPlaylist);
+              console.log('callService ended')
+              debugger;
+            });            
+          }  
+        }
       }
+    }
     getCardSize() {
       return 1;
     }
 }
   
-customElements.define('tracker-card-min', TrackerCardMin);
+customElements.define('spotify-playlist', SpotifyPlaylist);
