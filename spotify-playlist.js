@@ -42,7 +42,12 @@ class SpotifyPlaylist extends HTMLElement {
             button {
               float: center;
               border: 0;
-              padding: 0;
+              padding: 2px 2px;
+              color: rgb(120, 120, 120);
+              background-color: white;
+              font-weight: bold;
+              text-align: center;
+              font-size: 14px;
               margin: 2px 2px;
               border-radius: 4px;
               -webkit-transition-duration: 0.4s; /* Safari */
@@ -88,7 +93,7 @@ class SpotifyPlaylist extends HTMLElement {
         
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
-            card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}"></button>`;
+            card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}">${playlist[entry]['name']}</button>`;
             column_count += 1
             if (column_count == 2) {
               card_content += `</div><div id="row">`;
@@ -107,7 +112,7 @@ class SpotifyPlaylist extends HTMLElement {
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
         const media_player = config.media_player;
-
+        const columns = config.columns;
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             debugger;
