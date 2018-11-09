@@ -29,9 +29,26 @@ class SpotifyPlaylist extends HTMLElement {
       const card = document.createElement('ha-card');
       const content = document.createElement('div');
       const style = document.createElement('style');
+      
+      const columns = config.columns;
+
       style.textContent = `
             ha-card {
               /* sample css */
+            }
+
+            .grid-container {
+              display: grid;
+              grid-template-columns: auto auto;
+              background-color: white;
+              padding: 2px;
+            }
+            .grid-item {
+              background-color: white;
+              border: 0;
+              padding: 2px;
+              font-size: 14px;
+              text-align: center;
             }
 
             #row {
@@ -84,7 +101,7 @@ class SpotifyPlaylist extends HTMLElement {
       this.myhass = hass;
       let card_content = ''
       card_content += `
-        <div id="row">
+      <div class="grid-container">
       `;
        
       if (hass.states[config.entity]) {
@@ -93,14 +110,7 @@ class SpotifyPlaylist extends HTMLElement {
         
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
-            card_content += `<button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}">${playlist[entry]['name']}</button>`;
-            column_count += 1
-            if (column_count == 2) {
-              card_content += `</div><div id="row">`;
-            }
-            if (column_count == 4) {
-              card_content += `</div><div id="row">`;
-            }
+            card_content += `<div class="grid-item"><button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}">${playlist[entry]['name']}</button></div>`;
             debugger;
           }
         } 
@@ -112,7 +122,7 @@ class SpotifyPlaylist extends HTMLElement {
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
         const media_player = config.media_player;
-        const columns = config.columns;
+        
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             debugger;
