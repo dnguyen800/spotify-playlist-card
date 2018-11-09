@@ -23,32 +23,15 @@ class SpotifyPlaylist extends HTMLElement {
       const cardConfig = Object.assign({}, config);
       if (!cardConfig.title) {
         cardConfig.title = 'Playlists';
-      } else {
-        cardConfig.title = '📣 ' + cardConfig.title;
-      }
+      } 
+      
       const card = document.createElement('ha-card');
       const content = document.createElement('div');
       const style = document.createElement('style');
-      
-      const columns = config.columns;
 
       style.textContent = `
             ha-card {
               /* sample css */
-            }
-
-            .grid-container {
-              display: grid;
-              grid-template-columns: auto auto;
-              background-color: white;
-              padding: 2px;
-            }
-            .grid-item {
-              background-color: white;
-              border: 0;
-              padding: 2px;
-              font-size: 14px;
-              text-align: center;
             }
 
             #row {
@@ -74,13 +57,39 @@ class SpotifyPlaylist extends HTMLElement {
             button:hover {
               box-shadow: 0 5px 50px 0 rgba(0,0,0,0.2), 0 5px 20px 0 rgba(0,0,0,0.19);
             }
+
             img {
                 display: block;
-                height: 200px;
-                width: 200px;
-                border-radius: 4px;   
+                border-radius: 4px;
+            `;
+             
+      style.textContent += `    height: `;
+      style.textContent += config.size;
+      style.textContent += `;
+                width: `;
+      style.textContent += config.size;
+      style.textContent += `;
+    }`
+            
+      style.textContent += `
+            .grid-item {
+              background-color: white;
+              border: 0;
+              padding: 1px;
+              font-size: 14px;
+              text-align: center;
             }
-          `;
+
+            .grid-container {
+              display: grid;
+              background-color: white;
+              padding: 1px;
+              grid-template-columns:`;
+      for (let i = 0; i < config.columns; i++) { 
+        style.textContent += ` auto`; 
+      }
+      style.textContent += `;}`; 
+      debugger;
       content.innerHTML = `
       <div id='content'>
       </div>
