@@ -22,7 +22,7 @@ class SpotifyPlaylist extends HTMLElement {
   
       const cardConfig = Object.assign({}, config);
       if (!cardConfig.title) {
-        cardConfig.title = 'Playlists';
+        cardConfig.title = `Playlists`;
       } 
       
       const card = document.createElement('ha-card');
@@ -89,7 +89,9 @@ class SpotifyPlaylist extends HTMLElement {
       </div>
       `;
       
-      card.header = cardConfig.title
+      if (config.show_title) {
+        card.header = cardConfig.title;
+      }
       card.appendChild(content);
       card.appendChild(style);
       root.appendChild(card);
