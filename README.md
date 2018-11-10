@@ -10,8 +10,8 @@ Home Assistant Lovelace card &amp; sensor that lists your current Spotify playli
 
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
-| media_player | string | **Required** | Name of the Spotify media player in your Home Assistant instance. For example, media_player.spotify
-| entity| string | **Required** | Name of the Spotify Playlist sensor that holds your playlist info. Fore example, sensor.playlists
+| media_player | string | **Required** | Name of the Spotify media player in your Home Assistant instance. For example, `media_player.spotify`
+| entity| string | **Required** | Name of the Spotify Playlist sensor that holds your playlist info. For example, `sensor.playlists`
 | columns | int | '3' | Number of columns to display. Default is 3
 | size | string | '140px' | Size of playlist image. Can be listed as pixel (50px) or percentage (50%).
 | show_name | boolean | 'false' | Show playlist names. 
@@ -45,5 +45,5 @@ resources:
 I am studying Python as a hobby and this is my first public project. Unfortunately, I know nothing about Javascript and relied on studying other Lovelace custom cards to write this. Suggestions are welcome but no promises if I can fix anything! If you're familiar with CSS, then you can edit the CSS style in the .js file directly!
 
 ## Credits
-  - [Tracker-card](https://github.com/custom-cards/tracker-card) which I studied and re-used of the button code.
+  - [Tracker-card](https://github.com/custom-cards/tracker-card) which I studied and re-used the button code.
 
