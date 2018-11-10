@@ -1,5 +1,5 @@
 # Spotify Playlist Card
-Home Assistant Lovelace card that lists your current Spotify playlists. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) to be configured with playlist image and URI fields defined. 
+Home Assistant Lovelace card that lists your current Spotify playlists. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) and the [Spotify Media Player](https://www.home-assistant.io/components/media_player.spotify/) to be setup.
 
 ## Features
   - Press/click on the image to start the playlist on the selected Spotify media player.
