@@ -29,12 +29,17 @@ resources:
   - url: /local/spotify-playlist.js
     type: module
 ```
-4. Write configuration for the card in your `ui-lovelace.yaml`
+4. Write configuration for the card in your `ui-lovelace.yaml` and add your sensor and Spotify media player.
 
 ```yaml
-- type: "custom:spotify-playlist"
-    sensors:
-      - sensor.insert_name_here
+  - type: "custom:spotify-playlist"
+    entity: sensor.playlists
+    media_player: media_player.spotify
+    columns: 3
+    size: '140px'       
+    show_name: false      
+    show_title: false
+    title: 'My Playlists'   
 ```
 
 ## FAQ
