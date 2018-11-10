@@ -15,7 +15,7 @@ class SpotifyPlaylist extends HTMLElement {
   
     setConfig(config) {
       if (!config.entity) {
-        throw new Error('Please define an entity');
+        throw new Error('Please define an entity.');
       }
       const root = this.shadowRoot;
       if (root.lastChild) root.removeChild(root.lastChild);
