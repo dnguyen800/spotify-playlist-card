@@ -1,19 +1,21 @@
 # Spotify Playlist Card
-Home Assistant Lovelace card &amp; sensor that lists your current Spotify playlists. Requires the Spotify Playlist sensor to be configured with playlist image and URI fields defined.
+Home Assistant Lovelace card &amp; sensor that lists your current Spotify playlists. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) to be configured with playlist image and URI fields defined. 
 
 ## Features
 
-  - it barely works right now
-  - TBD resizes playlist images to fit # of columns specified
+  - specify number of columns, image size
   
 
 ## Options
 
-| Name | Type | Default | Supported options  | Description
+| Name | Type | Default | Example | Description
 | ---- | ---- | ------- | --------- | -----------
-| media_player | string | **Required** | `custom:button-card` | Name of the Spotify media player in your Home Assistant instance.
-| sensor | string | **Required** | '' | Name of the Spotify Playlist sensor that holds your playlist info.
-| columns | int | Optional | '' | Number of columns to display. Default is 3
+| media_player | string | **Required** | media_player.spotify | Name of the Spotify media player in your Home Assistant instance.
+| entity| string | **Required** | sensor.playlists | Name of the Spotify Playlist sensor that holds your playlist info.
+| columns | int | Optional | '3' | Number of columns to display. Default is 3
+| size | string | Optional | '140px' | Size of playlist image. Can be listed as pixel (50px) or percentage (50%).
+| show_name | boolean | Optional | 'false' | Show playlist names. Defaults to false.
+| show_title | boolean | Optional | 'false' | Shows the card title, 'Playlist'. Defaults to false.
 
 ## Instructions
 1. Install the Spotify Playlist sensor and confirm playlist data is loaded in the sensor.
@@ -37,5 +39,5 @@ resources:
 
 ## Credits
   - Home Assistant Spotify media player component
-  - List-card
+  - [Tracker-card](https://github.com/custom-cards/tracker-card) which I studied and re-used some of the code.
 
