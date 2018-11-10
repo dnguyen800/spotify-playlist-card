@@ -1,11 +1,12 @@
 # Spotify Playlist Card
-Home Assistant Lovelace card that lists your current Spotify playlists. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) and the [Spotify Media Player](https://www.home-assistant.io/components/media_player.spotify/) to be setup.
+![playlist](images/playlist-no_title_no_name.PNG)
+
+This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) and the [Spotify Media Player](https://www.home-assistant.io/components/media_player.spotify/) to be setup.
 
 ## Features
   - Press/click on the image to start the playlist on the selected Spotify media player.
   - specify number of columns, image size
   
-
 ## Options
 
 | Name | Type | Default | Description
@@ -41,6 +42,10 @@ resources:
 
    This card uses a new CSS function, CSS Grid Layout, which was implemented in October 2018, and isn't compatible with browsers using old versions of Android WebView. That's my guess anyways.
 
+ - I press on a playlist button but I don't hear the playlist playing.
+ 
+ If Spotify has been inactive for some time, Spotify will not start playing on the last played device. Start playing Spotify on any device, then try pressing the playlist button again.
+ 
 ## Support
 I am studying Python as a hobby and this is my first public project. Unfortunately, I know nothing about Javascript and relied on studying other Lovelace custom cards to write this. Suggestions are welcome but no promises if I can fix anything! If you're familiar with CSS, then you can edit the CSS style in the .js file directly!
 
