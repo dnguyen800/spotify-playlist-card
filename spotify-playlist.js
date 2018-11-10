@@ -84,6 +84,7 @@ class SpotifyPlaylist extends HTMLElement {
         text-align: center;
       }
       `; 
+      debugger;
       content.innerHTML = `
       <div id='content'>
       </div>
