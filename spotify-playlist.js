@@ -25,6 +25,14 @@ class SpotifyPlaylist extends HTMLElement {
         cardConfig.title = `Playlists`;
       } 
       
+      if (!config.size) {
+        config.size = `140px`;
+      }
+
+      if (!config.columns) {
+        config.columns = 3;
+      }
+
       const card = document.createElement('ha-card');
       const content = document.createElement('div');
       const style = document.createElement('style');
@@ -68,8 +76,12 @@ class SpotifyPlaylist extends HTMLElement {
             
       style.textContent += `
             .grid-container {
+              justify-content: center;
+              justify-items: center;
+              align-items: center;
               display: grid;
-              grid-gap: 1px;
+              gap: 1px 1px;
+              grid-gap: 1px 1px;
               background-color: white;
               grid-template-columns:`;
       var cssColumns = ' auto'.repeat(config.columns);
