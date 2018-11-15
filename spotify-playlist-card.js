@@ -6,7 +6,7 @@
 // ${playlist['Unorganized']['uri']}<br>
 
 
-class SpotifyPlaylist extends HTMLElement {
+class SpotifyPlaylistCard extends HTMLElement {
 
     constructor() {
       super();
@@ -26,7 +26,7 @@ class SpotifyPlaylist extends HTMLElement {
       } 
       
       if (!config.size) {
-        config.size = `140px`;
+        config.size = `160px`;
       }
 
       if (!config.columns) {
@@ -96,7 +96,6 @@ class SpotifyPlaylist extends HTMLElement {
         text-align: center;
       }
       `; 
-      debugger;
       content.innerHTML = `
       <div id='content'>
       </div>
@@ -161,4 +160,4 @@ class SpotifyPlaylist extends HTMLElement {
     }
 }
   
-customElements.define('spotify-playlist', SpotifyPlaylist);
+customElements.define('spotify-playlist-card', SpotifyPlaylistCard);
