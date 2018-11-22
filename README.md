@@ -26,8 +26,8 @@ This is a Home Assistant Lovelace card that takes your Spotify playlists and cre
 3. Include the card code in your `ui-lovelace-card.yaml`
 ```yaml
 resources:
-  - url: /local/spotify-playlist.js
-    type: module
+  - url: /local/spotify-playlist-card.js
+    type: js
 ```
 4. Write configuration for the card in your `ui-lovelace.yaml` and add your sensor and Spotify media player.
 
