@@ -3,6 +3,8 @@
 
 This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor](https://github.com/dnguyen800/Spotify-Playlist-Sensor) and the [Spotify Media Player](https://www.home-assistant.io/components/media_player.spotify/) to be setup.
 
+Note: There is another Spotify Playlist card by user @fondberg [here](https://github.com/fondberg/spotify-card) that is much cleaner and less hacky than my card. Doesn't require the Feed Parser sensor either. Check it out! I don't plan to make much updates on this card, besides fixing a few bugs.
+
 ## Features
   - Press/click on the image to start the playlist on the selected Spotify media player.
   - specify number of columns, image size
