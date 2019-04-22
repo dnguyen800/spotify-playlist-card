@@ -33,37 +33,37 @@ class SpotifyPlaylistCard extends HTMLElement {
         config.columns = 3;
       }
 
-      const card = document.createElement('ha-card');
+      const card = document.createElement('div');
       const content = document.createElement('div');
       const style = document.createElement('style');
 
       style.textContent = `
-            ha-card {
-              /* sample css */
-            }
 
             button {
               float: center;
-              border: 0;
+              border: 0px;
               padding: 1px 1px;
               color: rgb(120, 120, 120);
-              background-color: white;
+              border: 0;
               font-weight: bold;
               text-align: center;
               font-size: 14px;
               margin: 1px 1px;
               border-radius: 4px;
               -webkit-transition-duration: 0.4s; /* Safari */
-              transition-duration: 0.4s;             
+              transition-duration: 0.4s;       
+              background-color: rgba(0,0,0,0.0);      
             }
 
             button:hover {
               box-shadow: 0 5px 40px 0 rgba(0,0,0,0.2), 0 5px 20px 0 rgba(0,0,0,0.19);
             }
 
-            img {
+            button img {
                 display: block;
-                border-radius: 4px;
+                width: 100%;
+                border: 0;      
+                border-radius: 4px;       
             `;
              
       style.textContent += `    height: `;
@@ -80,20 +80,32 @@ class SpotifyPlaylistCard extends HTMLElement {
               justify-items: center;
               align-items: center;
               display: grid;
-              gap: 1px 1px;
+              border: 0;
+              gap: 1px 1px;              
               grid-gap: 1px 1px;
-              background-color: white;
-              grid-template-columns:`;
+              grid-template-columns: auto`;
       var cssColumns = ' auto'.repeat(config.columns);
       style.textContent += cssColumns;
       style.textContent += `;}
 
       .grid-item {
-        background-color: white;
         border: 0;
         padding: 1px;
         font-size: 14px;
         text-align: center;
+      }
+      
+      .grid-title {
+        grid-row: 1 / span 4; 
+        text-align: center; 
+        vertical-align: text-top;
+        writing-mode: vertical-rl; 
+
+      }
+      .grid-item ha-icon {
+        -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg); /* Safari */
+        transform: rotate(90deg);
       }
       `; 
       content.innerHTML = `
@@ -119,6 +131,10 @@ class SpotifyPlaylistCard extends HTMLElement {
       let card_content = ''
       card_content += `
       <div class="grid-container">
+        <div class="grid-item grid-title">
+          <ha-icon icon="mdi:spotify"></ha-icon>
+          <strong>Spotify Playlists</strong>
+        </div>
       `;
        
       if (hass.states[config.entity]) {
