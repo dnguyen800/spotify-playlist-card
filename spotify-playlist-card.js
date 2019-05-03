@@ -33,6 +33,14 @@ class SpotifyPlaylistCard extends HTMLElement {
         config.columns = 3;
       }
 
+      if (!config.media_player) {
+        config.media_player = `chromecast`;
+      }
+
+      if (!config.speaker_name) {
+        config.speaker_name = `speaker name`;
+      }
+
       const card = document.createElement('div');
       const content = document.createElement('div');
       const style = document.createElement('style');
@@ -152,20 +160,32 @@ class SpotifyPlaylistCard extends HTMLElement {
         } 
       };
       card_content += `</div>`;
+      card_content += `
+      <ha-icon icon="mdi:speaker"></ha-icon><select name="device_name">
+        <option value ="test">Test</option>
+        <option value ="test">Test</option>
+        <option value ="test">Test</option>
+        <option value ="test">Test</option>
+      `;
       root.lastChild.hass = hass;
       root.getElementById('content').innerHTML = card_content;
 
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
         const media_player = config.media_player;
-        
+        const speaker_name = config.speaker_name;
+
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
-              console.log('callService started')
-              const myPlaylist = {"entity_id": media_player, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
-              this.myhass.callService('media_player', 'play_media', myPlaylist);
-              console.log('callService ended')
+              if (media_player == "echo") {
+                const myPlaylist = {"entity_id": speaker_name, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
+                this.myhass.callService('media_player', 'play_media', myPlaylist);                
+              }
+              else if (media_player == "chromecast") {
+                const spotcastPlaylist = {"device_name": speaker_name, "uri": `${playlist[entry]['uri']}`};
+                this.myhass.callService('spotcast', 'start', spotcastPlaylist);
+              }
             });            
           }  
         }
