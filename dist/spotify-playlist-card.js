@@ -26,7 +26,7 @@ class SpotifyPlaylistCard extends HTMLElement {
       } 
       
       if (!config.size) {
-        config.size = `160px`;
+        config.size = `15vmin`;
       }
 
       if (!config.columns) {
@@ -34,7 +34,7 @@ class SpotifyPlaylistCard extends HTMLElement {
       }
 
       if (!config.media_player) {
-        config.media_player = `chromecast`;
+        config.media_player = `default`;
       }
 
       if (!config.speaker_name) {
@@ -64,7 +64,7 @@ class SpotifyPlaylistCard extends HTMLElement {
             }
 
             button:hover {
-              box-shadow: 0 5px 40px 0 rgba(0,0,0,0.2), 0 5px 20px 0 rgba(0,0,0,0.19);
+              box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2), 0 5px 12px 0 rgba(0,0,0,0.19);
             }
 
             button img {
@@ -198,7 +198,7 @@ class SpotifyPlaylistCard extends HTMLElement {
                 const myPlaylist = {"entity_id": speaker_name, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
                 this.myhass.callService('media_player', 'play_media', myPlaylist);                
               }
-              else if (media_player == "chromecast") {
+              else if (media_player == "spotcast") {
                 const spotcastPlaylist = {"device_name": speaker_name, "uri": `${playlist[entry]['uri']}`};
                 this.myhass.callService('spotcast', 'start', spotcastPlaylist);
               }
