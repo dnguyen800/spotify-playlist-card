@@ -147,6 +147,7 @@ class SpotifyPlaylistCard extends HTMLElement {
        
       if (hass.states[config.entity]) {
         const playlist = hass.states[config.entity].attributes;
+
         let column_count = 0
         
         for (let entry in playlist) {
@@ -162,11 +163,26 @@ class SpotifyPlaylistCard extends HTMLElement {
       card_content += `</div>`;
       card_content += `
       <ha-icon icon="mdi:speaker"></ha-icon><select name="device_name">
-        <option value ="test">Test</option>
-        <option value ="test">Test</option>
-        <option value ="test">Test</option>
-        <option value ="test">Test</option>
-      `;
+      `;    
+
+      if (hass.states['sensor.chromecast_devices']) {
+        const chromecastSensor = hass.states['sensor.chromecast_devices'];
+        
+        if (chromecastSensor) {
+          const chromecastDevices = JSON.parse(chromecastSensor.attributes.devices_json);
+          for (let x in chromecastDevices) {
+            card_content += `
+              <option value ="${chromecastDevices[x]['name']}">${chromecastDevices[x]['name']}</option>
+            `;  
+          }
+        }
+
+
+      };
+      
+      card_content += `</select>`;
+
+
       root.lastChild.hass = hass;
       root.getElementById('content').innerHTML = card_content;
 
