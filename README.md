@@ -20,6 +20,7 @@ Note: There is another Spotify Playlist card by user @fondberg [here](https://gi
   - Works with [Spotcast component][spotcast].
   - Press/click on the image to start the playlist on the selected media player.
   - Specify the number of columns and image size.
+  - No white background!
 
 ## Installation
 
@@ -68,7 +69,7 @@ resources:
 | show_title | boolean | **Optional** | Displays the card title.  | `false`
 | title | string | **Optional** | Card title. | `Playlists`
 | media_player | string | **Optional** | Media player used. Accepted choices are: `spotcast`, `echo`, `spotify`. | `spotify`
-| speaker_name | string | **Optional** | The name of the speaker that will play the music. When using Spotcast, use the name listed exactly, like `Living Room Speaker`. If using Amazon Echo or Spotify as the media player, list the full entity name, such as "media_player.spotify" | `media_player.spotify`
+| speaker_name | string | **Optional** | The name of the speaker that will play the music. When using Spotcast, use the name listed exactly from `sensor.chromecast_devices`, like `Living Room Speaker`. If using Amazon Echo or Spotify as the media player, list the full entity name, such as "media_player.spotify" | `media_player.spotify`
 
 
 ### Sample for ui-lovelace.yaml:
@@ -89,7 +90,7 @@ resources:
 [spotify-playlist-card]: https://github.com/dnguyen800/spotify-playlist-card
 [spotify-playlist-sensor]: https://github.com/dnguyen800/spotify-playlist-sensor
 [Troubleshooting]: https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins
-[commits-shield]: https://img.shields.io/github/commit-activity/y/dnguyen800/spotify-playlist-card?style=for-the-badge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/dnguyen800/spotify-playlist-card.svg?style=for-the-badge
 [commits]: https://github.com/dnguyen800/spotify-playlist-card.svg/commits/master
 [license-shield]: https://img.shields.io/github/license/dnguyen800/spotify-playlist-card.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg?style=for-the-badge

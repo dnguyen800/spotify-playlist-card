@@ -161,26 +161,26 @@ class SpotifyPlaylistCard extends HTMLElement {
         } 
       };
       card_content += `</div>`;
-      card_content += `
-      <ha-icon icon="mdi:speaker"></ha-icon><select name="device_name">
-      `;    
+//      card_content += `
+//      <ha-icon icon="mdi:speaker"></ha-icon><select name="device_name">
+//      `;    
 
-      if (hass.states['sensor.chromecast_devices']) {
-        const chromecastSensor = hass.states['sensor.chromecast_devices'];
+//      if (hass.states['sensor.chromecast_devices']) {
+//        const chromecastSensor = hass.states['sensor.chromecast_devices'];
         
-        if (chromecastSensor) {
-          const chromecastDevices = JSON.parse(chromecastSensor.attributes.devices_json);
-          for (let x in chromecastDevices) {
-            card_content += `
-              <option value ="${chromecastDevices[x]['name']}">${chromecastDevices[x]['name']}</option>
-            `;  
-          }
-        }
+//        if (chromecastSensor) {
+//         const chromecastDevices = JSON.parse(chromecastSensor.attributes.devices_json);
+//          for (let x in chromecastDevices) {
+//            card_content += `
+//              <option value ="${chromecastDevices[x]['name']}">${chromecastDevices[x]['name']}</option>
+//            `;  
+//          }
+//        }
 
 
-      };
+//      };
       
-      card_content += `</select>`;
+//      card_content += `</select>`;
 
 
       root.lastChild.hass = hass;
