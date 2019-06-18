@@ -1,35 +1,44 @@
 # Spotify Playlist Card
 
-![header][header-image]
-
-This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor][spotify-playlist-sensor], [Spotify Media Player][spotify-component] to be setup.
-
-Also works with the [Spotcast component][spotcast].
-
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
 [![License][license-shield]](LICENSE.md)
 
-[![Project Maintenance][maintenance-shield]][maintainer-shield]
+![Project Maintenance][maintenance-shield]
+![Project Maintenance][maintainer-shield]
 
+![header][header-image]
+
+This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor][spotify-playlist-sensor], [Spotify Media Player][spotify-component] to be setup.
+
+Also works with the.
+
+Note: There is another Spotify Playlist card by user @fondberg [here](https://github.com/fondberg/spotify-card) that is much cleaner and less hacky than my card. Doesn't require the Feed Parser sensor either. Check it out! I don't plan to make much updates on this card, besides fixing a few bugs. 
+
+
+## Features
+  - Works with [Spotcast component][spotcast].
+  - Press/click on the image to start the playlist on the selected media player.
+  - Specify the number of columns and image size.
 
 ## Installation
 
 ### HACS Install
- Include this [repository][spotify-playlist-card] as a custom repository.
+ Include this [repository][spotify-playlist-card] as a custom repository in the HACS settings.
  
- ```
- [spotify-playlist-card]
- ```
+```
+https://github.com/dnguyen800/spotify-playlist-card
+```
  
+ If added correctly, the repository should be listed like below:
  ![hacs][hacs-image]
  
 
 ### Manual install
 
-1. Install the [Spotify Playlist sensor][spotify-playlist-sensor] and confirm your playlists and their URI and image URLs are loaded in the sensor.
-1. Download the `[spotify-playlist-card.js][js-file]` and save to the `config/www` folder
-3. Include the card code in your `ui-lovelace-card.yaml`
+1. Install the [Spotify Playlist sensor][spotify-playlist-sensor] and confirm your playlists,  URIs and image URLs are loaded in the sensor.
+1. Download the [spotify-playlist-card.js][js-file] and save to the `config/www` folder
+3. Include the card code at the top of the `ui-lovelace-card.yaml`
 ```yaml
 resources:
   - url: /local/spotify-playlist-card.js
@@ -44,6 +53,8 @@ resources:
   size: '15vmin'    
   media_player: spotcast
   speaker_name: "Dan's Room display"
+```
+
 
 ## Options
 
@@ -78,7 +89,7 @@ resources:
 [spotify-playlist-card]: https://github.com/dnguyen800/spotify-playlist-card
 [spotify-playlist-sensor]: https://github.com/dnguyen800/spotify-playlist-sensor
 [Troubleshooting]: https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins
-[commits-shield]: https://img.shields.io/github/commit-activity/y/dnguyen800/spotify-playlist-card.svg?style=for-the-badge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/dnguyen800/spotify-playlist-card?style=for-the-badge
 [commits]: https://github.com/dnguyen800/spotify-playlist-card.svg/commits/master
 [license-shield]: https://img.shields.io/github/license/dnguyen800/spotify-playlist-card.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg?style=for-the-badge
@@ -88,22 +99,6 @@ resources:
 [releases]: https://github.com/dnguyen800/spotify-playlist-card/releases
 
 
-# Spotify Playlist Card
-![playlist](images/playlist-no_title_no_name.PNG)
-
-
-
-Note: There is another Spotify Playlist card by user @fondberg [here](https://github.com/fondberg/spotify-card) that is much cleaner and less hacky than my card. Doesn't require the Feed Parser sensor either. Check it out! I don't plan to make much updates on this card, besides fixing a few bugs.
-
-## Features
-  - Press/click on the image to start the playlist on the selected Spotify media player.
-  - specify number of columns, image size
-
-
-
-## Instructions
-
-```
 
 ## FAQ
 - I press on a playlist button but I don't hear the playlist playing.
