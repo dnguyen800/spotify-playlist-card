@@ -47,32 +47,26 @@ class SpotifyPlaylistCard extends HTMLElement {
 
       style.textContent = `
 
-            button {
-              float: center;
-              border: 0px;
-              padding: 1px 1px;
-              color: rgb(120, 120, 120);
-              border: 0;
-              font-weight: bold;
-              text-align: center;
-              font-size: 14px;
-              margin: 1px 1px;
-              border-radius: 4px;
-              -webkit-transition-duration: 0.4s; /* Safari */
-              transition-duration: 0.4s;       
-              background-color: rgba(0,0,0,0.0);      
-            }
+      button {
+        border: 0px;
+        padding: 0;
+        color: #FFFFFF;
+        border: 0;
+        width:100%
+        font-size: 14px;
+        margin: 0;
+        background-color: rgba(0,0,0,0.0);
+      }
 
-            button:hover {
-              box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2), 0 5px 12px 0 rgba(0,0,0,0.19);
-            }
+      button:hover {
+      }
 
-            button img {
-                display: block;
-                width: 100%;
-                border: 0;      
-                border-radius: 4px;       
-            `;
+      button img {
+          display: block;
+          width: 100%;
+          border: 2px; 
+          border-radius: 4px;             
+      `;
              
       style.textContent += `    height: `;
       style.textContent += config.size;
@@ -82,33 +76,44 @@ class SpotifyPlaylistCard extends HTMLElement {
       style.textContent += `;
     }`
             
-      style.textContent += `
-            .grid-container {
-              justify-content: center;
-              justify-items: center;
-              align-items: center;
-              display: grid;
-              border: 0;
-              gap: 1px 1px;              
-              grid-gap: 1px 1px;
-              grid-template-columns: auto`;
+    style.textContent += `
+          .grid-container {
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            display: grid;
+            border: 0;
+            grid-gap: 8px; 
+            grid-template-columns: auto`;
       var cssColumns = ' auto'.repeat(config.columns);
       style.textContent += cssColumns;
       style.textContent += `;}
 
       .grid-item {
         border: 0;
-        padding: 1px;
-        font-size: 14px;
-        text-align: center;
+        padding: 0;
+        position: relative; 
       }
-      
+      .grid-item-text {
+        border: 0;
+        padding: 18px 10px 10px 10px;
+        text-align:left;
+        position: absolute; 
+        bottom: 0; 
+        width: 100%;
+        box-sizing:border-box;
+        color: white;
+        background: rgb(0,0,0);
+        background: linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 69%, rgba(0,0,0,0) 100%);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-radius: 4px; 
+      }     
       .grid-title {
         grid-row: 1 / span 4; 
         text-align: center; 
         vertical-align: text-top;
         writing-mode: vertical-rl; 
-
       }
       .grid-item ha-icon {
         -ms-transform: rotate(90deg); /* IE 9 */
@@ -152,11 +157,11 @@ class SpotifyPlaylistCard extends HTMLElement {
         
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
-            card_content += `<div class="grid-item"><button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}">`;
+            card_content += `<div class="grid-item"><button raised id ='playlist${playlist[entry]['id']}'><img src="${playlist[entry]['image']}"></button>`;
             if (config.show_name == true) {
-              card_content += `${playlist[entry]['name']}`
+              card_content += `<div class="grid-item-text">${playlist[entry]['name']}</div>`;
             };
-            card_content += `</button></div>`;
+            card_content += `</div>`;
           }
         } 
       };
