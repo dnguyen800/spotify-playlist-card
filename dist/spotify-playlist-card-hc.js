@@ -27,15 +27,45 @@ class SpotifyPlaylistCardHC extends HTMLElement {
 //   'grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));'
 
       style.textContent = `
-      .spotifyPlaylistGrid {
+      .spotifyContainer {
+        margin:auto;
         display: grid;
-        grid-gap: 0.5rem; 
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 8px;
 
-      body {
-        font: 12px system-ui;
-      }  
-       
+      .grid-item {
+        position: relative;
+        flex-basis: calc(33.333%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        border-radius: 3px;
+      }
+
+      .grid-item::before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+      }
+
+      .content {
+        border-radius:0px 0px 3px 3px;
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        padding: 20px 10px 10px 10px;
+        border: 0;
+        text-align:left;
+        color: rgba(255,255,255,1);
+        box-sizing:border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: rgb(0,0,0);
+        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.86) 30%, rgba(0,0,0,0.86) 100%);
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.86) 30%,rgba(0,0,0,0.86) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.86) 30%,rgba(0,0,0,0.86) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#db000000',GradientType=0 );
+      }       
       `; 
 
 
@@ -61,13 +91,13 @@ class SpotifyPlaylistCardHC extends HTMLElement {
       this.myhass = hass;
       let card_content = ''
       card_content += `
-      <div class="spotifyPlaylistGrid">
-        <div><button raised id ='playlist01'><img style="width: 100%;" src="https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747"></button></div>
-        <div><button raised id ='playlist02'><img style="width: 100%;" src="https://pl.scdn.co/images/pl/default/bbbbd22aa438e9dc3491b1bf9d75af0d71b1b258"></button></div>
-        <div><button raised id ='playlist03'><img style="width: 100%;" src="https://newjams-images.scdn.co/v1/rays/en"></button></div>
-        <div><button raised id ='playlist04'><img style="width: 100%;" src="https://mosaic.scdn.co/640/94c124dd9812e03e8d21de9a05bbee08ad60ed91a8a3e6e81b7d6ec1b36a900879bf3b524d125f66ab67616d0000b273b83be7c56ab7b7a137169dfdb25ba89cbacbe9cffeacadf8395c0cc6aa94b59f"></button></div>
-        <div><button raised id ='playlist05'><img style="width: 100%;" src="https://mosaic.scdn.co/640/ab67616d0000b273097b24db7c6349715f53d6dfab67616d0000b273a5aef98a1762d0f64bb6ed9aab67616d0000b273bbe24bee78a7c2bd5e4e5f4eab67616d0000b273bdfe26aa13413ebbd830c0bb"></button></div>
-        <div><button raised id ='playlist06'><img style="width: 100%;" src="https://mosaic.scdn.co/640/4314712b152c540d2c73be9d0693067c7fb141da50761801525ccd3f2e83e5ed3e7ba88eca9428c194ef36a714c2860c52709c24d33f864d1eb56d0bab67616d0000b2733d5c1247292ab3c779aba188"></button></div>
+      <div class="spotifyContainer">
+        <div class="grid-item" style="background-image:url(https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747);"><div class="content">Playlist 1</div></div>
+        <div class="grid-item" style="background-image:url(https://pl.scdn.co/images/pl/default/bbbbd22aa438e9dc3491b1bf9d75af0d71b1b258);"><div class="content">Playlist 1</div></div>
+        <div class="grid-item" style="background-image:url(https://newjams-images.scdn.co/v1/rays/en);"><div class="content">Playlist 1</div></div>
+        <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/94c124dd9812e03e8d21de9a05bbee08ad60ed91a8a3e6e81b7d6ec1b36a900879bf3b524d125f66ab67616d0000b273b83be7c56ab7b7a137169dfdb25ba89cbacbe9cffeacadf8395c0cc6aa94b59f);"><div class="content">Playlist 1</div></div>
+        <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/ab67616d0000b273097b24db7c6349715f53d6dfab67616d0000b273a5aef98a1762d0f64bb6ed9aab67616d0000b273bbe24bee78a7c2bd5e4e5f4eab67616d0000b273bdfe26aa13413ebbd830c0bb);"><div class="content">Playlist 1</div></div>
+        <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/4314712b152c540d2c73be9d0693067c7fb141da50761801525ccd3f2e83e5ed3e7ba88eca9428c194ef36a714c2860c52709c24d33f864d1eb56d0bab67616d0000b2733d5c1247292ab3c779aba188);"><div class="content">Playlist 1</div></div>
       </div>
         `;
        
