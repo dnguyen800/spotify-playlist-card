@@ -1,0 +1,7 @@
+{
+  "name": "Spotify Playlist Card",
+  "filename":"spotify-playlist-card.js",
+  "domains": ["sensor"],
+  "render_readme": true,
+  "homeassistant": "0.92.0"
+}
