@@ -1,12 +1,17 @@
-// Examples:
+// For learning purposes, I studied the following cards:
+// https://github.com/robmarkoski/ha-clockwork-card/blob/master/clockwork-card.js
+
+
+// Examples of using an HA entity's attributes:
+// This example looks into HA entity (sensor.spotifyplaylist), the attribute called 'Unorganized', and sub attribute 'name'
 // const entityId = this.config.entity;
 // const playlist = hass.states[entityId].attributes;
-//    ${playlist['Unorganized']['name']}<br>
-// ${playlist['Unorganized']['image']}<br>
-// ${playlist['Unorganized']['uri']}<br>
+// ${playlist['Unorganized']['name']}
+// ${playlist['Unorganized']['image']}
+// ${playlist['Unorganized']['uri']}
 
 
-class SpotifyPlaylistCardHC extends HTMLElement {
+class SpotifyPlaylistCard extends HTMLElement {
 
     constructor() {
       super();
@@ -17,30 +22,43 @@ class SpotifyPlaylistCardHC extends HTMLElement {
       const root = this.shadowRoot;
       if (root.lastChild) root.removeChild(root.lastChild);
   
+      // Contains values of this Lovelace card configuration
       const cardConfig = Object.assign({}, config);
+
+      // Default values of config options. Uses ternary statements
+      const columns = config.columns ? config.columns : 3;
+      const gradientLevel = config.gradient_level ? config.gradient_level : 0.8;
+      const gridGap = config.grid_gap ? config.grid_gap : '8px';
+      // changes opacity to 0 to hide playlist title
+      const showPlaylistTitles = config.show_playlist_titles ? 1 : 0;
+
+
+      if (!config.entity) {
+        throw new Error('Please define the name of the Spotify Playlist sensor.');
+      }
+
 
       const card = document.createElement('div');
       const content = document.createElement('div');
       const style = document.createElement('style');
 
-// Ideas: if 'column' and/or 'row' are not defined in options, then use this CSS to automatically organize playlists:
-//   'grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));'
+      // Ideas: if 'column' and/or 'row' are not defined in options, then use this CSS to automatically organize playlists:
+      //   'grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));'
 
       style.textContent = `
       .outercontainer {
         margin:auto;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 8px;
+        grid-template-columns: repeat(${columns}, 1fr);
+        grid-gap: ${gridGap};
+      }
 
       .grid-item {
         position: relative;
-        flex-basis: calc(33.333%);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
         border-radius: 3px;
-
       }
 
       .grid-item::before {
@@ -49,15 +67,11 @@ class SpotifyPlaylistCardHC extends HTMLElement {
         padding-top: 100%;
       }
 
-      body {
-        padding:0;
-        margin:0;
-      }
-
       .content {
         border-radius:0px 0px 3px 3px;
         position: absolute;
         bottom: 0;
+        opacity: ${showPlaylistTitles};
         width:100%;
         padding: 20px 10px 10px 10px;
         border: 0;
@@ -67,9 +81,9 @@ class SpotifyPlaylistCardHC extends HTMLElement {
         overflow: hidden;
         text-overflow: ellipsis;
         background: rgb(0,0,0);
-        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.86) 30%, rgba(0,0,0,0.86) 100%);
-        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.86) 30%,rgba(0,0,0,0.86) 100%);
-        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.86) 30%,rgba(0,0,0,0.86) 100%);
+        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,${gradientLevel}) 30%, rgba(0,0,0,${gradientLevel}) 100%);
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,${gradientLevel}) 30%,rgba(0,0,0,${gradientLevel}) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,${gradientLevel}) 30%,rgba(0,0,0,${gradientLevel}) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#db000000',GradientType=0 );
       }       
       `; 
@@ -86,43 +100,89 @@ class SpotifyPlaylistCardHC extends HTMLElement {
       card.appendChild(content);
       card.appendChild(style);
       root.appendChild(card);
-      this._config = cardConfig;
+      this.config = cardConfig;
     }
   
  
     set hass(hass) {
-      const config = this._config;
+      const config = this.config;
       const root = this.shadowRoot;
       const card = root.lastChild;
+      let card_content = ``;
+      let playlist = {};
       this.myhass = hass;
-      let card_content = `
 
-      <div class="outercontainer">
-
-      <div class="grid-item" style="background-image:url(https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747);"><div class="content">Spotify List 1</div></div>
-      <div class="grid-item" style="background-image:url(https://pl.scdn.co/images/pl/default/bbbbd22aa438e9dc3491b1bf9d75af0d71b1b258);"><div class="content">Another List Here</div></div>
-      <div class="grid-item" style="background-image:url(https://newjams-images.scdn.co/v1/rays/en);"><div class="content">Cool List</div></div>
-      <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/94c124dd9812e03e8d21de9a05bbee08ad60ed91a8a3e6e81b7d6ec1b36a900879bf3b524d125f66ab67616d0000b273b83be7c56ab7b7a137169dfdb25ba89cbacbe9cffeacadf8395c0cc6aa94b59f);"><div class="content">Spotify Hits</div></div>
-      <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/ab67616d0000b273097b24db7c6349715f53d6dfab67616d0000b273a5aef98a1762d0f64bb6ed9aab67616d0000b273bbe24bee78a7c2bd5e4e5f4eab67616d0000b273bdfe26aa13413ebbd830c0bb);"><div class="content">Another Hit List</div></div>
-      <div class="grid-item" style="background-image:url(https://mosaic.scdn.co/640/4314712b152c540d2c73be9d0693067c7fb141da50761801525ccd3f2e83e5ed3e7ba88eca9428c194ef36a714c2860c52709c24d33f864d1eb56d0bab67616d0000b2733d5c1247292ab3c779aba188);"><div class="content">Best Songs Here</div></div>
-      <div class="grid-item" style="background-image:url(https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747);"><div class="content">Just Another Long Playlist Name Here</div></div>
-      <div class="grid-item" style="background-image:url(https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747);"><div class="content">Shot One</div></div>
-      <div class="grid-item" style="background-image:url(https://i.scdn.co/image/2e3f8733a2ca7ffe418f2f9e7ecdc7d793d11747);"><div class="content">Playlist Name Nine</div></div>
-      
-      </div>
-        `;
-       
-
-
-
+      try {
+        playlist = hass.states[config.entity].attributes;   
+        // Beginning of CSS grid
+        card_content += `
+        <div class="outercontainer">
+          `;
+         
+        for (let entry in playlist) {
+          // Sanity check that attributes in Spotify Playlist sensor are valid playlists
+          if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
+            card_content += `
+            <div class="grid-item" id ="playlist${playlist[entry]['id']}" style="background-image:url(${playlist[entry]['image']});">
+              <div class="content">${playlist[entry]['name']}</div>
+            </div>
+            `;
+          }
+        } 
+        // End of CSS grid
+        card_content += `</div>`;
+      }
+      catch(err) {
+        throw new Error(`Error detected: ${err}`);
+      }
 
       root.lastChild.hass = hass;
       root.getElementById('content').innerHTML = card_content;
 
+
+      // Add a click event to any CSS objects that has an ID: playlist01, playlist02, etc.
+      try {
+        // need to redefine 'playlist' as it was walked through in entirety in prev for loop.
+        playlist = hass.states[config.entity].attributes;
+        const mediaPlayer = config.media_player ? config.media_player : "default";
+        const speakerName = config.speaker_name ? config.speaker_name : "media_player.spotify";
+        const shuffleBoolean = config.shuffle ? config.shuffle : true;
+        const shuffleParameters = { "entity_id": speakerName, "shuffle": shuffleBoolean };
+        let playlistParameters = {};
+
+        // Learn about: 
+        // hass.callService: https://developers.home-assistant.io/docs/en/frontend_data.html#hassuser
+        for (let entry in playlist) {
+          if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
+            card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
+              if (mediaPlayer == "alexa") {
+                this.myhass.callService('media_player', 'shuffle_set', shuffleParameters); 
+                playlistParameters = {"entity_id": speakerName, "media_content_type": "SPOTIFY", "media_content_id": `${playlist[entry]['name']}`};      
+                this.myhass.callService('media_player', 'play_media', playlistParameters);                
+              }
+              else if (mediaPlayer == "spotcast") {
+                this.myhass.callService('media_player', 'shuffle_set', shuffleParameters); 
+                playlistParameters = {"entity_id": speakerName, "uri": `${playlist[entry]['uri']}`, "random_song": shuffleBoolean };
+                this.myhass.callService('spotcast', 'start', playlistParameters);
+              }
+              else {
+                this.myhass.callService('media_player', 'shuffle_set', shuffleParameters);   
+                playlistParameters = {"entity_id": speakerName, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
+                this.myhass.callService('media_player', 'play_media', playlistParameters); 
+              }
+            });            
+          }  
+        }
+      }
+      catch(err) {
+        throw new Error(`Error detected: ${err}`);
+      }
+
+      
     }
     getCardSize() {
       return 1;
     }
 }
   
-customElements.define('spotify-playlist-card-hc', SpotifyPlaylistCardHC);
+customElements.define('spotify-playlist-card', SpotifyPlaylistCard);
