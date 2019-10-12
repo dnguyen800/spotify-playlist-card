@@ -3,7 +3,7 @@
 
 
 // Examples of using an HA entity's attributes:
-// This example looks into HA entity (sensor.spotifyplaylist), the attribute called 'Unorganized', and sub attribute 'name'
+// This example looks into HA entity (sensor.spotify_playlist), the attribute called 'Unorganized', and sub attribute 'name'
 // const entityId = this.config.entity;
 // const playlist = hass.states[entityId].attributes;
 // ${playlist['Unorganized']['name']}
@@ -33,7 +33,7 @@ class SpotifyPlaylistCard extends HTMLElement {
       const showPlaylistTitles = config.show_playlist_titles ? 1 : 0;
 
 
-      if (!config.entity) {
+      if (!config.sensor) {
         throw new Error('Please define the name of the Spotify Playlist sensor.');
       }
 
@@ -113,7 +113,7 @@ class SpotifyPlaylistCard extends HTMLElement {
       this.myhass = hass;
 
       try {
-        playlist = hass.states[config.entity].attributes;   
+        playlist = hass.states[config.sensor].attributes;   
         // Beginning of CSS grid
         card_content += `
         <div class="outercontainer">
@@ -143,11 +143,11 @@ class SpotifyPlaylistCard extends HTMLElement {
       // Add a click event to any CSS objects that has an ID: playlist01, playlist02, etc.
       try {
         // need to redefine 'playlist' as it was walked through in entirety in prev for loop.
-        playlist = hass.states[config.entity].attributes;
-        const mediaPlayer = config.media_player ? config.media_player : "default";
-        const speakerName = config.speaker_name ? config.speaker_name : "media_player.spotify";
+        playlist = hass.states[config.sensor].attributes;
+        const playbackMethod = config.playback_method ? config.playback_method : "default";
+        const speakerEntity = config.speaker_entity ? config.speaker_entity : "media_player.spotify";
         const shuffleBoolean = config.shuffle ? config.shuffle : true;
-        const shuffleParameters = { "entity_id": speakerName, "shuffle": shuffleBoolean };
+        const shuffleParameters = { "entity_id": speakerEntity, "shuffle": shuffleBoolean };
         let playlistParameters = {};
 
         // Learn about: 
@@ -155,19 +155,19 @@ class SpotifyPlaylistCard extends HTMLElement {
         for (let entry in playlist) {
           if (entry !== "friendly_name" && entry !== "icon" && entry !== "homebridge_hidden") {
             card.querySelector(`#playlist${playlist[entry]['id']}`).addEventListener('click', event => {
-              if (mediaPlayer == "alexa") {
+              if (playbackMethod == "alexa") {
                 this.myhass.callService('media_player', 'shuffle_set', shuffleParameters); 
-                playlistParameters = {"entity_id": speakerName, "media_content_type": "SPOTIFY", "media_content_id": `${playlist[entry]['name']}`};      
+                playlistParameters = {"entity_id": speakerEntity, "media_content_type": "SPOTIFY", "media_content_id": `${playlist[entry]['name']}`};      
                 this.myhass.callService('media_player', 'play_media', playlistParameters);                
               }
-              else if (mediaPlayer == "spotcast") {
+              else if (playbackMethod == "spotcast") {
                 this.myhass.callService('media_player', 'shuffle_set', shuffleParameters); 
-                playlistParameters = {"entity_id": speakerName, "uri": `${playlist[entry]['uri']}`, "random_song": shuffleBoolean };
+                playlistParameters = {"entity_id": speakerEntity, "uri": `${playlist[entry]['uri']}`, "random_song": shuffleBoolean };
                 this.myhass.callService('spotcast', 'start', playlistParameters);
               }
               else {
                 this.myhass.callService('media_player', 'shuffle_set', shuffleParameters);   
-                playlistParameters = {"entity_id": speakerName, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
+                playlistParameters = {"entity_id": speakerEntity, "media_content_type": "playlist", "media_content_id": `${playlist[entry]['uri']}`};
                 this.myhass.callService('media_player', 'play_media', playlistParameters); 
               }
             });            
