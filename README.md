@@ -9,21 +9,22 @@
 
 ![header][header-image]
 
-This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor][spotify-playlist-sensor], [Spotify Media Player][spotify-component] to be setup.
+This is a Home Assistant Lovelace card that takes your Spotify playlists and creates buttons that will start the playlist when pressed. Requires the [Spotify Playlist sensor][spotify-playlist-sensor], and [Spotify Media Player][spotify-component] to be setup.
 
 Note: There is another Spotify Playlist card by user @fondberg [here](https://github.com/fondberg/spotify-card) that is much cleaner and less hacky than my card. Doesn't require the Feed Parser sensor either. Check it out! I don't plan to make much updates on this card, besides fixing a few bugs. 
 
 
 ## Features
-  - Works with [Spotcast component][spotcast] and Alexa media player component.
+  - Works with [Spotcast component][spotcast] and [Alexa media player component][alexa-media] (still testing).
   - Press/click on the image to start the playlist on the selected media player.
-  - Specify the number of columns.
+  - Configurable options (number of columns, grid gap, shuffle, playlist title)
   - No white background!
 
 ## Installation
 
 ### HACS Install
- Include this [repository][spotify-playlist-card] as a custom plugin in the HACS settings.
+1. Install the [Spotify Playlist sensor][spotify-playlist-sensor] via HACS.
+2. Include this [repository][spotify-playlist-card] as a custom plugin in the HACS settings.
 
 ```
 https://github.com/dnguyen800/spotify-playlist-card
@@ -37,26 +38,32 @@ https://github.com/dnguyen800/spotify-playlist-card
 
 1. Install the [Spotify Playlist sensor][spotify-playlist-sensor] and confirm your playlists,  URIs and image URLs are loaded in the sensor.
 1. Download the [spotify-playlist-card.js][js-file] and save to the `config/www` folder
-3. Include the card code at the top of the `ui-lovelace-card.yaml`
+3.  If you edit your Lovelace configuration using `ui-lovelace.yaml`, include the card code at the top of the `ui-lovelace-card.yaml`. If using the Lovelace UI editor, enter the `Raw Config Editor` and make sure the following code is at the top of the editor:
+
 ```yaml
 resources:
   - url: /local/spotify-playlist-card.js
     type: js
 ```
-4. Add card configuration in `ui-lovelace.yaml` like the example below:
+![lovelace-ui-header](images/lovelace-ui-03.png)
+
+### Configuration
+1. Make sure the [Spotify Playlist sensor][spotify-playlist-sensor] contains playlist data.
+2. If you edit your Lovelace configuration using `ui-lovelace.yaml`, add the entry below:
 
 ```yaml
 - type: "custom:spotify-playlist-card"
   sensor: sensor.spotify_playlist  
   playback_method: spotcast
   speaker_entity: "media_player.google_home"
-  gradient_level: 0.7
-  grid_gap: '8px'
   show_playlist_titles: true
   shuffle: true
   columns: 3
 ```
 
+If using the Lovelace UI editor, click on `⋮ >> Configure UI >> + >> Manual Card` and add the entry above, making sure to modify the config to match your entity IDs. If the config works, the card should appear in a preview window to the right.
+
+![lovelace-ui](images/lovelace-ui-02.png)
 
 ## Options
 
@@ -93,6 +100,7 @@ resources:
 [spotify-component]: https://www.home-assistant.io/components/media_player.spotify/
 [spotify-playlist-card]: https://github.com/dnguyen800/spotify-playlist-card
 [spotify-playlist-sensor]: https://github.com/dnguyen800/spotify-playlist-sensor
+[alexa-media]: https://github.com/custom-components/alexa_media_player
 [Troubleshooting]: https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins
 [commits-shield]: https://img.shields.io/github/commit-activity/y/dnguyen800/spotify-playlist-card.svg?style=for-the-badge
 [commits]: https://github.com/dnguyen800/spotify-playlist-card.svg/commits/master
