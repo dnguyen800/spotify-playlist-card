@@ -15,23 +15,23 @@ Note: There is another Spotify Playlist card by user @fondberg [here](https://gi
 
 
 ## Features
-  - Works with [Spotcast component][spotcast].
+  - Works with [Spotcast component][spotcast] and Alexa media player component.
   - Press/click on the image to start the playlist on the selected media player.
-  - Specify the number of columns and image size.
+  - Specify the number of columns.
   - No white background!
 
 ## Installation
 
 ### HACS Install
- Include this [repository][spotify-playlist-card] as a custom repository in the HACS settings.
- 
+ Include this [repository][spotify-playlist-card] as a custom plugin in the HACS settings.
+
 ```
 https://github.com/dnguyen800/spotify-playlist-card
 ```
- 
+
  If added correctly, the repository should be listed like below:
  ![hacs][hacs-image]
- 
+
 
 ### Manual install
 
@@ -47,11 +47,14 @@ resources:
 
 ```yaml
 - type: "custom:spotify-playlist-card"
-  entity: sensor.spotifyplaylist
+  sensor: sensor.spotify_playlist  
+  playback_method: spotcast
+  speaker_entity: "media_player.google_home"
+  gradient_level: 0.7
+  grid_gap: '8px'
+  show_playlist_titles: true
+  shuffle: true
   columns: 3
-  size: '15vmin'    
-  media_player: spotcast
-  speaker_name: "Dan's Room display"
 ```
 
 
@@ -59,26 +62,29 @@ resources:
 
 | Name | Type | Requirement | Description | Default
 | ---- | ---- | ------- | ----------- | -------
-| type | string | **Required** | `custom:spotify-playlist-card`
-| entity | string | **Required** | Name of the Spotify Playlist sensor that holds your playlist info.  | `sensor.spotifyplaylist`
-| columns | int | **Optional** | Number of columns to display. | 3
-| size | string | **Optional** | Size of playlist image. Follows CSS units such as `px`, `%`, `vw`, `vh`, `vmin`, `vmax`.   | `15vmin`
-| show_name | boolean | **Optional** | Displays playlist names.  | `false`
-| show_title | boolean | **Optional** | Displays the card title.  | `false`
-| title | string | **Optional** | Card title. | `Playlists`
-| media_player | string | **Optional** | Media player used. Accepted choices are: `spotcast`, `echo`, `spotify`. | `spotify`
-| speaker_name | string | **Optional** | The name of the speaker that will play the music. When using Spotcast, use the name listed exactly from `sensor.chromecast_devices`, like `Living Room Speaker`. If using Amazon Echo or Spotify as the media player, list the full entity name, such as "media_player.spotify" | `media_player.spotify`
+| type | string | **Required** | `custom:spotify-playlist-card` | None 
+| sensor | string | **Required** | Name of the Spotify Playlist sensor that holds your playlist info.  | None
+| columns | int | **Optional** | Number of columns to display. | `3`
+| gradient_level | string | **Optional** | Choose a value between 0 and 1 for the gradient level used when `show_playlist_titles` is enabled. | `0.8`
+| grid_gap | string | **Optional** | Define the size of the gap between playlist images. | `8px`
+| show_playlist_titles| boolean | **Optional** | Add a text title at the bottom of each playlist. | `false`
+| shuffle | boolean | **Optional** | Set the Spotify `shuffle` setting. | `false`
+| playback_method | string | **Optional** | Speaker playback method for Spotify. Acceptable choices are: `spotcast`, `alexa`, or `spotify` | `spotify`
+| speaker_entity | string | **Optional** | The name of the speaker that will play the music. When using Spotcast, use the `entity_id` of the Chromecast device listed in Home Assistant. If using Amazon Echo or Spotify as the media player, list the full entity name, such as "media_player.spotify" | `media_player.spotify`
 
 
 ### Sample for ui-lovelace.yaml:
 
 ```yaml
 - type: "custom:spotify-playlist-card"
-  entity: sensor.spotifyplaylist  
-  media_player: spotcast
-  speaker_name: "Dan's Room display"
+  sensor: sensor.spotify_playlist  
+  playback_method: spotcast
+  speaker_entity: "media_player.google_home"
+  gradient_level: 0.7
+  grid_gap: '8px'
+  show_playlist_titles: true
+  shuffle: true
   columns: 3
-  size: '15vmin'  
 ```
 [hacs-image]: images/hacs.png
 [js-file]: https://raw.githubusercontent.com/dnguyen800/spotify-playlist-card/master/dist/spotify-playlist-card.js
@@ -102,7 +108,7 @@ resources:
 ## FAQ
 - I press on a playlist button but I don't hear the playlist playing.
 
- If you are using `media_player: spotify`, and not `spotcast` or `echo`, you will not be able to play music on idle speakers. To remedy, start playing Spotify on any device, then try pressing the playlist button again.
+ If you are using `media_player: spotify`, and not `spotcast` or `echo`, you will not be able to play music on idle speakers. To remedy, start playing Spotify on any device, then try pressing the playlist image again.
 
 ## Support
 I am studying Python as a hobby and this is my first public project. Unfortunately, I know nothing about Javascript and relied on studying other Lovelace custom cards to write this. Suggestions are welcome but no promises if I can fix anything! If you're familiar with CSS, then you can edit the CSS style in the .js file directly!
