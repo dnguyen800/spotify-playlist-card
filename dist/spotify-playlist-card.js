@@ -68,24 +68,25 @@ class SpotifyPlaylistCard extends HTMLElement {
       }
 
       .content {
-        border-radius:0px 0px 3px 3px;
+        border-radius: 0 0 3px 3px;
         position: absolute;
         bottom: 0;
         opacity: ${showPlaylistTitles};
-        width:100%;
+        width: 100%;
         padding: 20px 10px 10px 10px;
         border: 0;
-        text-align:left;
+        text-align: left;
         color: rgba(255,255,255,1);
-        box-sizing:border-box;
+        box-sizing: border-box;
         overflow: hidden;
         text-overflow: ellipsis;
+	white-space: nowrap;
         background: rgb(0,0,0);
         background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,${gradientLevel}) 30%, rgba(0,0,0,${gradientLevel}) 100%);
         background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,${gradientLevel}) 30%,rgba(0,0,0,${gradientLevel}) 100%);
         background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,${gradientLevel}) 30%,rgba(0,0,0,${gradientLevel}) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#db000000',GradientType=0 );
-      }       
+      }
       `; 
 
 
